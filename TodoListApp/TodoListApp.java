@@ -8,14 +8,6 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
 public class TodoListApp extends JFrame {
-    // Dark theme color constants
-    private static final Color DARK_BACKGROUND = new Color(30, 30, 30);
-    private static final Color DARK_PANEL = new Color(40, 40, 40);
-    private static final Color DARK_TEXT = new Color(220, 220, 220);
-    private static final Color DARK_BORDER = new Color(60, 60, 60);
-    private static final Color DARK_SELECTED = new Color(70, 130, 180);
-    private static final Color DARK_BUTTON_BG = new Color(50, 50, 50);
-
     private DefaultTableModel tableModel;
     private JTable table;
     private TableRowSorter<DefaultTableModel> sorter;
@@ -26,17 +18,14 @@ public class TodoListApp extends JFrame {
     private JLabel statusLabel;
 
     public TodoListApp() {
-        setTitle("Modern To-Do List Manager - Dark Theme");
+        setTitle("Modern To-Do List Manager");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(900, 700);
         setLocationRelativeTo(null);
 
-        // Set dark theme colors
-        setupDarkTheme();
-
-        // Set modern look and feel
+        // Use Nimbus look and feel
         try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -56,14 +45,12 @@ public class TodoListApp extends JFrame {
         table = new JTable(tableModel);
         table.setRowHeight(30);
         table.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-        table.setBackground(DARK_PANEL);
-        table.setForeground(DARK_TEXT);
-        table.setSelectionBackground(DARK_SELECTED);
+        table.setSelectionBackground(new Color(106, 156, 252));
         table.setSelectionForeground(Color.WHITE);
         table.setGridColor(new Color(60, 60, 60));
         table.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 13));
-        table.getTableHeader().setBackground(DARK_BACKGROUND);
-        table.getTableHeader().setForeground(DARK_TEXT);
+        table.getTableHeader().setBackground(new Color(43, 43, 43));
+        table.getTableHeader().setForeground(new Color(204, 204, 204));
         table.getTableHeader().setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, new Color(60, 60, 60)));
 
         // Set column widths
@@ -79,9 +66,9 @@ public class TodoListApp extends JFrame {
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createLineBorder(new Color(60, 60, 60)), "Tasks",
-                0, 0, new Font("Segoe UI", Font.BOLD, 12), DARK_TEXT));
-        scrollPane.setBackground(DARK_BACKGROUND);
-        scrollPane.getViewport().setBackground(DARK_PANEL);
+                0, 0, new Font("Segoe UI", Font.BOLD, 12), new Color(204, 204, 204)));
+        scrollPane.setBackground(new Color(43, 43, 43));
+        scrollPane.getViewport().setBackground(new Color(60, 63, 65));
 
         // Create modern input panel
         createInputPanel();
@@ -94,9 +81,9 @@ public class TodoListApp extends JFrame {
         statusLabel = new JLabel("Ready");
         statusLabel.setBorder(new EmptyBorder(5, 10, 5, 10));
         statusLabel.setFont(new Font("Segoe UI", Font.PLAIN, 11));
-        statusLabel.setForeground(DARK_TEXT);
+        statusLabel.setForeground(new Color(204, 204, 204));
         statusLabel.setOpaque(true);
-        statusLabel.setBackground(DARK_BACKGROUND); // Main layout
+        statusLabel.setBackground(new Color(43, 43, 43)); // Main layout
         setLayout(new BorderLayout(10, 10));
         add(createTopPanel(), BorderLayout.NORTH);
         add(scrollPane, BorderLayout.CENTER);
@@ -104,37 +91,14 @@ public class TodoListApp extends JFrame {
 
         // Add some padding and set background
         ((JComponent) getContentPane()).setBorder(new EmptyBorder(10, 10, 10, 10));
-        getContentPane().setBackground(DARK_BACKGROUND);
+        getContentPane().setBackground(new Color(43, 43, 43));
 
         updateStatusLabel();
     }
 
-    private void setupDarkTheme() {
-        // Set main frame background
-        getContentPane().setBackground(DARK_BACKGROUND);
-
-        // Configure UIManager for dark theme
-        UIManager.put("Panel.background", DARK_PANEL);
-        UIManager.put("Label.foreground", DARK_TEXT);
-        UIManager.put("TextField.background", DARK_PANEL);
-        UIManager.put("TextField.foreground", DARK_TEXT);
-        UIManager.put("TextField.caretForeground", DARK_TEXT);
-        UIManager.put("ComboBox.background", DARK_PANEL);
-        UIManager.put("ComboBox.foreground", DARK_TEXT);
-        UIManager.put("Table.background", DARK_PANEL);
-        UIManager.put("Table.foreground", DARK_TEXT);
-        UIManager.put("Table.selectionBackground", DARK_SELECTED);
-        UIManager.put("Table.selectionForeground", Color.WHITE);
-        UIManager.put("TableHeader.background", DARK_BACKGROUND);
-        UIManager.put("TableHeader.foreground", DARK_TEXT);
-        UIManager.put("ScrollPane.background", DARK_BACKGROUND);
-        UIManager.put("TitledBorder.titleColor", DARK_TEXT);
-        // Note: Removed Button.background and Button.foreground to avoid conflicts
-    }
-
     private JPanel createTopPanel() {
         JPanel topPanel = new JPanel(new BorderLayout(5, 5));
-        topPanel.setBackground(DARK_BACKGROUND);
+        topPanel.setBackground(new Color(43, 43, 43));
         topPanel.add(createSearchPanel(), BorderLayout.NORTH);
         topPanel.add(createInputPanel(), BorderLayout.CENTER);
         return topPanel;
@@ -142,7 +106,7 @@ public class TodoListApp extends JFrame {
 
     private JPanel createBottomPanel() {
         JPanel bottomPanel = new JPanel(new BorderLayout());
-        bottomPanel.setBackground(DARK_BACKGROUND);
+        bottomPanel.setBackground(new Color(43, 43, 43));
         bottomPanel.add(createControlPanel(), BorderLayout.CENTER);
         bottomPanel.add(statusLabel, BorderLayout.SOUTH);
         return bottomPanel;
@@ -150,22 +114,22 @@ public class TodoListApp extends JFrame {
 
     private JPanel createSearchPanel() {
         JPanel searchPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        searchPanel.setBackground(DARK_PANEL);
+        searchPanel.setBackground(new Color(60, 63, 65));
         searchPanel.setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createLineBorder(new Color(60, 60, 60)), "Search & Filter",
-                0, 0, new Font("Segoe UI", Font.BOLD, 12), DARK_TEXT));
+                0, 0, new Font("Segoe UI", Font.BOLD, 12), new Color(204, 204, 204)));
 
         searchField = new JTextField(20);
         searchField.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-        searchField.setBackground(DARK_BACKGROUND);
-        searchField.setForeground(DARK_TEXT);
-        searchField.setCaretColor(DARK_TEXT);
+        searchField.setBackground(new Color(43, 43, 43));
+        searchField.setForeground(new Color(204, 204, 204));
+        searchField.setCaretColor(new Color(106, 156, 252));
         searchField.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(new Color(60, 60, 60)),
                 BorderFactory.createEmptyBorder(5, 8, 5, 8)));
 
-        JButton searchButton = createModernButton("Search", new Color(33, 150, 243));
-        JButton clearSearchButton = createModernButton("Clear", new Color(158, 158, 158));
+        JButton searchButton = createModernButton("Search", new Color(106, 156, 252));
+        JButton clearSearchButton = createModernButton("Clear", new Color(255, 152, 0));
 
         searchButton.addActionListener(e -> performSearch());
         clearSearchButton.addActionListener(e -> clearSearch());
@@ -177,7 +141,7 @@ public class TodoListApp extends JFrame {
         });
 
         JLabel searchLabel = new JLabel("Search:");
-        searchLabel.setForeground(DARK_TEXT);
+        searchLabel.setForeground(new Color(204, 204, 204));
         searchLabel.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 
         searchPanel.add(searchLabel);
@@ -190,18 +154,18 @@ public class TodoListApp extends JFrame {
 
     private JPanel createInputPanel() {
         JPanel inputPanel = new JPanel(new GridBagLayout());
-        inputPanel.setBackground(DARK_PANEL);
+        inputPanel.setBackground(new Color(60, 63, 65));
         inputPanel.setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createLineBorder(new Color(60, 60, 60)), "Add New Task",
-                0, 0, new Font("Segoe UI", Font.BOLD, 12), DARK_TEXT));
+                0, 0, new Font("Segoe UI", Font.BOLD, 12), new Color(204, 204, 204)));
         GridBagConstraints gbc = new GridBagConstraints();
 
         // Task field
         taskField = new JTextField(25);
         taskField.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-        taskField.setBackground(DARK_BACKGROUND);
-        taskField.setForeground(DARK_TEXT);
-        taskField.setCaretColor(DARK_TEXT);
+        taskField.setBackground(new Color(43, 43, 43));
+        taskField.setForeground(new Color(204, 204, 204));
+        taskField.setCaretColor(new Color(106, 156, 252));
         taskField.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(new Color(60, 60, 60)),
                 BorderFactory.createEmptyBorder(5, 8, 5, 8)));
@@ -209,9 +173,9 @@ public class TodoListApp extends JFrame {
         // Tag field
         tagField = new JTextField(15);
         tagField.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-        tagField.setBackground(DARK_BACKGROUND);
-        tagField.setForeground(DARK_TEXT);
-        tagField.setCaretColor(DARK_TEXT);
+        tagField.setBackground(new Color(43, 43, 43));
+        tagField.setForeground(new Color(204, 204, 204));
+        tagField.setCaretColor(new Color(106, 156, 252));
         tagField.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(new Color(60, 60, 60)),
                 BorderFactory.createEmptyBorder(5, 8, 5, 8)));
@@ -219,24 +183,24 @@ public class TodoListApp extends JFrame {
         // Priority combo
         priorityCombo = new JComboBox<>(new String[] { "Low", "Medium", "High", "Urgent" });
         priorityCombo.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-        priorityCombo.setBackground(DARK_BACKGROUND);
-        priorityCombo.setForeground(DARK_TEXT);
+        priorityCombo.setBackground(new Color(43, 43, 43));
+        priorityCombo.setForeground(new Color(204, 204, 204));
 
         // Add button
-        JButton addButton = createModernButton("+ Add Task", new Color(46, 125, 50));
+        JButton addButton = createModernButton("+ Add Task", new Color(76, 175, 80));
         addButton.addActionListener(e -> addTask());
 
         // Create labels with dark text
         JLabel taskLabel = new JLabel("Task:");
-        taskLabel.setForeground(DARK_TEXT);
+        taskLabel.setForeground(new Color(204, 204, 204));
         taskLabel.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 
         JLabel priorityLabel = new JLabel("Priority:");
-        priorityLabel.setForeground(DARK_TEXT);
+        priorityLabel.setForeground(new Color(204, 204, 204));
         priorityLabel.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 
         JLabel tagsLabel = new JLabel("Tags:");
-        tagsLabel.setForeground(DARK_TEXT);
+        tagsLabel.setForeground(new Color(204, 204, 204));
         tagsLabel.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 
         // Layout components
@@ -286,12 +250,12 @@ public class TodoListApp extends JFrame {
 
     private JPanel createControlPanel() {
         JPanel controlPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
-        controlPanel.setBackground(DARK_PANEL);
+        controlPanel.setBackground(new Color(60, 63, 65));
         controlPanel.setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createLineBorder(new Color(60, 60, 60)), "Actions",
-                0, 0, new Font("Segoe UI", Font.BOLD, 12), DARK_TEXT));
+                0, 0, new Font("Segoe UI", Font.BOLD, 12), new Color(204, 204, 204)));
 
-        JButton editButton = createModernButton("Edit Task", new Color(33, 150, 243));
+        JButton editButton = createModernButton("Edit Task", new Color(106, 156, 252));
         JButton deleteButton = createModernButton("Delete Task", new Color(244, 67, 54));
         JButton completeAllButton = createModernButton("Complete All", new Color(76, 175, 80));
         JButton deleteCompletedButton = createModernButton("Clear Completed", new Color(255, 152, 0));
@@ -312,43 +276,6 @@ public class TodoListApp extends JFrame {
     private JButton createModernButton(String text, Color backgroundColor) {
         JButton button = new JButton(text);
         button.setFont(new Font("Segoe UI", Font.BOLD, 12));
-        button.setBackground(backgroundColor);
-        button.setForeground(Color.BLACK); // Black text for better readability
-        button.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(backgroundColor.darker(), 1),
-                BorderFactory.createEmptyBorder(8, 16, 8, 16)));
-        button.setFocusPainted(false);
-        button.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        button.setOpaque(true);
-        button.setBorderPainted(true);
-        button.setContentAreaFilled(true);
-
-        // Add modern hover effect with text color preservation
-        button.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                button.setBackground(backgroundColor.brighter());
-                button.setForeground(Color.BLACK);
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-                button.setBackground(backgroundColor);
-                button.setForeground(Color.BLACK);
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-                button.setBackground(backgroundColor.darker());
-                button.setForeground(Color.BLACK);
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                button.setBackground(backgroundColor.brighter());
-                button.setForeground(Color.BLACK);
-            }
-        });
         return button;
     }
 
@@ -387,24 +314,24 @@ public class TodoListApp extends JFrame {
             String currentTags = (String) tableModel.getValueAt(modelRow, 2); // Create edit dialog
             JDialog editDialog = new JDialog(this, "Edit Task", true);
             editDialog.setLayout(new GridBagLayout());
-            editDialog.getContentPane().setBackground(DARK_BACKGROUND);
+            editDialog.getContentPane().setBackground(new Color(43, 43, 43));
             GridBagConstraints gbc = new GridBagConstraints();
             gbc.insets = new Insets(5, 5, 5, 5);
 
             JTextField editTaskField = new JTextField(currentTask, 25);
             editTaskField.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-            editTaskField.setBackground(DARK_PANEL);
-            editTaskField.setForeground(DARK_TEXT);
-            editTaskField.setCaretColor(DARK_TEXT);
+            editTaskField.setBackground(new Color(60, 63, 65));
+            editTaskField.setForeground(new Color(204, 204, 204));
+            editTaskField.setCaretColor(new Color(106, 156, 252));
             editTaskField.setBorder(BorderFactory.createCompoundBorder(
                     BorderFactory.createLineBorder(new Color(60, 60, 60)),
                     BorderFactory.createEmptyBorder(5, 8, 5, 8)));
 
             JTextField editTagField = new JTextField(currentTags, 15);
             editTagField.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-            editTagField.setBackground(DARK_PANEL);
-            editTagField.setForeground(DARK_TEXT);
-            editTagField.setCaretColor(DARK_TEXT);
+            editTagField.setBackground(new Color(60, 63, 65));
+            editTagField.setForeground(new Color(204, 204, 204));
+            editTagField.setCaretColor(new Color(106, 156, 252));
             editTagField.setBorder(BorderFactory.createCompoundBorder(
                     BorderFactory.createLineBorder(new Color(60, 60, 60)),
                     BorderFactory.createEmptyBorder(5, 8, 5, 8)));
@@ -412,16 +339,16 @@ public class TodoListApp extends JFrame {
             JComboBox<String> editPriorityCombo = new JComboBox<>(new String[] { "Low", "Medium", "High", "Urgent" });
             editPriorityCombo.setSelectedItem(currentPriority);
             editPriorityCombo.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-            editPriorityCombo.setBackground(DARK_PANEL);
-            editPriorityCombo.setForeground(DARK_TEXT);
+            editPriorityCombo.setBackground(new Color(60, 63, 65));
+            editPriorityCombo.setForeground(new Color(204, 204, 204));
 
             // Create labels with dark text
             JLabel taskLabelEdit = new JLabel("Task:");
-            taskLabelEdit.setForeground(DARK_TEXT);
+            taskLabelEdit.setForeground(new Color(204, 204, 204));
             JLabel priorityLabelEdit = new JLabel("Priority:");
-            priorityLabelEdit.setForeground(DARK_TEXT);
+            priorityLabelEdit.setForeground(new Color(204, 204, 204));
             JLabel tagsLabelEdit = new JLabel("Tags:");
-            tagsLabelEdit.setForeground(DARK_TEXT);
+            tagsLabelEdit.setForeground(new Color(204, 204, 204));
 
             gbc.gridx = 0;
             gbc.gridy = 0;
@@ -442,9 +369,9 @@ public class TodoListApp extends JFrame {
             editDialog.add(editTagField, gbc);
 
             JPanel buttonPanel = new JPanel();
-            buttonPanel.setBackground(DARK_BACKGROUND);
-            JButton saveButton = createModernButton("Save", new Color(46, 125, 50));
-            JButton cancelButton = createModernButton("Cancel", new Color(158, 158, 158));
+            buttonPanel.setBackground(new Color(43, 43, 43));
+            JButton saveButton = createModernButton("Save", new Color(76, 175, 80));
+            JButton cancelButton = createModernButton("Cancel", new Color(255, 152, 0));
 
             saveButton.addActionListener(e -> {
                 String updatedTask = editTaskField.getText().trim();
