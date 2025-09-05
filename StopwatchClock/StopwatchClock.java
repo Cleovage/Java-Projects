@@ -33,10 +33,10 @@ public class StopwatchClock extends JFrame {
     private JButton resetButton;
 
     // Colors for modern UI
-    private final Color BACKGROUND_COLOR = new Color(45, 45, 45);
-    private final Color PANEL_COLOR = new Color(60, 60, 60);
-    private final Color TEXT_COLOR = new Color(255, 255, 255);
-    private final Color ACCENT_COLOR = new Color(0, 150, 255);
+    private final Color BACKGROUND_COLOR = new Color(45, 45, 48);
+    private final Color PANEL_COLOR = new Color(60, 60, 65);
+    private final Color TEXT_COLOR = new Color(240, 240, 240);
+    private final Color ACCENT_COLOR = new Color(100, 149, 237);
     private final Color SUCCESS_COLOR = new Color(76, 175, 80);
     private final Color DANGER_COLOR = new Color(244, 67, 54);
 
@@ -93,18 +93,60 @@ public class StopwatchClock extends JFrame {
         button.setPreferredSize(new Dimension(120, 50));
         button.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
+        // Add curved edges to buttons
+        button.putClientProperty("JButton.buttonType", "roundRect");
+        // For Java Swing, we need to set a custom border to get rounded corners
+        int radius = 15; // Adjust the radius to control the curve amount
+        button.setBorder(new RoundedBorder(radius, color));
+
         // Add hover effect
         button.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 button.setBackground(color.brighter());
+                // Update border color on hover
+                button.setBorder(new RoundedBorder(radius, color.brighter()));
             }
 
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 button.setBackground(color);
+                // Restore original border color
+                button.setBorder(new RoundedBorder(radius, color));
             }
         });
 
         return button;
+    }
+
+    // Custom border class for rounded buttons
+    private static class RoundedBorder extends javax.swing.border.AbstractBorder {
+        private final int radius;
+        private final Color color;
+
+        RoundedBorder(int radius, Color color) {
+            this.radius = radius;
+            this.color = color;
+        }
+
+        @Override
+        public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
+            Graphics2D g2 = (Graphics2D) g.create();
+            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+            g2.setColor(color);
+            g2.fillRoundRect(x, y, width, height, radius, radius);
+            g2.dispose();
+        }
+
+        @Override
+        public Insets getBorderInsets(Component c) {
+            return new Insets(8, 16, 8, 16);
+        }
+
+        @Override
+        public Insets getBorderInsets(Component c, Insets insets) {
+            insets.left = insets.right = 16;
+            insets.top = insets.bottom = 8;
+            return insets;
+        }
     }
 
     private void setupLayout() {

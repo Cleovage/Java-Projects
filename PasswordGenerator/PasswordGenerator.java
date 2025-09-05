@@ -15,14 +15,14 @@ public class PasswordGenerator extends JFrame {
     private boolean isPasswordVisible = false;
 
     // Modern color scheme
-    private static final Color DARK_BG = new Color(32, 33, 36);
-    private static final Color CARD_BG = new Color(48, 49, 52);
-    private static final Color PRIMARY_COLOR = new Color(66, 133, 244);
-    private static final Color SUCCESS_COLOR = new Color(52, 168, 83);
-    private static final Color WARNING_COLOR = new Color(251, 188, 4);
-    private static final Color DANGER_COLOR = new Color(234, 67, 53);
-    private static final Color TEXT_PRIMARY = new Color(232, 234, 237);
-    private static final Color TEXT_SECONDARY = new Color(154, 160, 166);
+    private static final Color DARK_BG = new Color(45, 45, 48);
+    private static final Color CARD_BG = new Color(60, 60, 65);
+    private static final Color PRIMARY_COLOR = new Color(100, 149, 237);
+    private static final Color SUCCESS_COLOR = new Color(76, 175, 80);
+    private static final Color WARNING_COLOR = new Color(255, 152, 0);
+    private static final Color DANGER_COLOR = new Color(244, 67, 54);
+    private static final Color TEXT_PRIMARY = new Color(240, 240, 240);
+    private static final Color TEXT_SECONDARY = new Color(180, 180, 180);
 
     public PasswordGenerator() {
         super("Password Generator Pro");
@@ -208,6 +208,44 @@ public class PasswordGenerator extends JFrame {
         button.setBorderPainted(false);
         button.setCursor(new Cursor(Cursor.HAND_CURSOR));
         button.setBorder(BorderFactory.createEmptyBorder(8, 16, 8, 16));
+
+        // Add curved edges to buttons
+        button.putClientProperty("JButton.buttonType", "roundRect");
+        // For Java Swing, we need to set a custom border to get rounded corners
+        int radius = 15; // Adjust the radius to control the curve amount
+        button.setBorder(new RoundedBorder(radius, bgColor));
+    }
+
+    // Custom border class for rounded buttons
+    private static class RoundedBorder extends javax.swing.border.AbstractBorder {
+        private final int radius;
+        private final Color color;
+
+        RoundedBorder(int radius, Color color) {
+            this.radius = radius;
+            this.color = color;
+        }
+
+        @Override
+        public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
+            Graphics2D g2 = (Graphics2D) g.create();
+            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+            g2.setColor(color);
+            g2.fillRoundRect(x, y, width, height, radius, radius);
+            g2.dispose();
+        }
+
+        @Override
+        public Insets getBorderInsets(Component c) {
+            return new Insets(8, 16, 8, 16);
+        }
+
+        @Override
+        public Insets getBorderInsets(Component c, Insets insets) {
+            insets.left = insets.right = 16;
+            insets.top = insets.bottom = 8;
+            return insets;
+        }
     }
 
     private void styleSpinner(JSpinner spinner) {
